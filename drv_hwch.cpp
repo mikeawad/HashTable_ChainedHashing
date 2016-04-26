@@ -2,7 +2,7 @@
 //
 //  HASH TABLE PROGRAM
 //
-//  The Table class uses chained hashing 
+//  The Table class uses chained hashing
 //     and allows only insertions (no deletions).
 //
 //*****************************************************************
@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cassert>
+#include <cstdlib>
 
 using namespace std;
 
@@ -27,15 +28,15 @@ int main( )
     int key;
     bool found;
     int size;
-    
+
     do
     {
         print_menu( );
         cout << "Enter choice: ";
         cin >> choice;
-        cout << endl; 
+        cout << endl;
         choice = toupper(choice);
-        
+
         switch (choice)
         {
             case 'I': // insert
@@ -53,24 +54,32 @@ int main( )
                       if ( found )
                       {
                          cout << "Record was found." << endl;
-                         cout << "   key  = " << setw(8) 
+                         cout << "   key  = " << setw(8)
                               << rec.key << endl;
-                         cout << "   data = " << setw(8) 
+                         cout << "   data = " << setw(8)
                               << rec.data << endl;
                       }
                       else
-                         cout << "Record with key " << key << " not found." 
+                         cout << "Record with key " << key << " not found."
                               << endl << endl;
                       break;
             case 'S': // size
                       size = dataTable.size( );
-                      cout << "There are " << size << " records in the table." 
+                      cout << "There are " << size << " records in the table."
                            << endl;
-                     // cout << "There are " << (CAPACITY - size) 
+                     // cout << "There are " << (CAPACITY - size)
                      //      << " empty slots left in the table." << endl << endl;
                       break;
             case 'Q': cout << "Test program ended." << endl;
                       break;
+            case 'P': cout <<"< Printing Table > " << endl;
+                      dataTable.print();
+                      break;
+            case 'E': cout << "Enter key (int >= 0) for record to delete: ";
+            		  cin >> key;
+					  dataTable.erase(key, found, rec);
+					  found ? (cout << "Record deleted" << endl): (cout << "Record Not Found" << endl);
+					  break;
             default:  cout << choice << " is invalid." << endl;
         }
     }
@@ -81,10 +90,12 @@ int main( )
 
 void print_menu( )
 {
-    cout << endl; 
+    cout << endl;
     cout << "The following choices are available: " << endl;
     cout << " I   Insert a new record or update existing record" << endl;
     cout << " F   Find a record" << endl;
     cout << " S   Get the number of records" << endl;
+    cout << " P   Print Table" << endl;
+    cout << " E   Erase record" << endl;
     cout << " Q   Quit this test program" << endl << endl;
 }
