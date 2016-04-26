@@ -75,6 +75,11 @@ int main( )
             case 'P': cout <<"< Printing Table > " << endl;
                       dataTable.print();
                       break;
+            case 'E': cout << "Enter key (int >= 0) for record to delete: ";
+            		  cin >> key;
+					  dataTable.erase(key, found, rec);
+					  found ? (cout << "Record deleted" << endl): (cout << "Record Not Found" << endl);
+					  break;
             default:  cout << choice << " is invalid." << endl;
         }
     }
@@ -91,5 +96,6 @@ void print_menu( )
     cout << " F   Find a record" << endl;
     cout << " S   Get the number of records" << endl;
     cout << " P   Print Table" << endl;
+    cout << " E   Erase record" << endl;
     cout << " Q   Quit this test program" << endl << endl;
 }
