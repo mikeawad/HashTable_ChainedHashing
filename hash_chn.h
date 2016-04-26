@@ -61,10 +61,10 @@ public:
    void find( int key, bool& found, RecordType& result ) const;
    int size( ) const;
    void print() const;
+   void erase(  int key, bool& found, RecordType& result );
 private:
    int hash( int key ) const;
    void findPtr( int key, bool& found, Node*& ptr ) const;
    Node* table[CAPACITY];
    int used;
 };
-
