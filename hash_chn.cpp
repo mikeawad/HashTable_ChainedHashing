@@ -91,33 +91,37 @@ void Table::find( int key, bool& found, RecordType& result ) const
    }
 }
 
-/*------------------------------------------------------------------
-void erase()
 
-bool itemFound;
-Node* nodePtr;
-Node* delPtr;
-findPtr(key, itemFound, nodePtr)
-
-if(!itemFound)
-	cout << "Item not found in table." << endl;
-
-else if( found && table[i] == nodePtr->rec.key)
+void Table::erase(  int key, bool& found, RecordType& result)
 {
-	delPtr = table[i];
-	table[i] = table[i]->next;
-	delete delPtr;
-}
-
-else
-{
-	nodePtr->key = table[i]->key;
-	nodePtr->data = table[i]->data;
-	delPtr = table[i];
-	table[i] = table[i]->next;
-	delete delPtr;
-}
-----------------------------------------------------------------------*/
+	Node  *nodePtr,
+		  *delPtr,
+		  *ptr;
+	
+	findPtr( key, found, nodePtr );
+	int i = hash(key);
+	ptr = table[i];
+	if(!found)
+		cout << "Item not found in table." << endl;
+	
+	else if( found && (ptr == nodePtr))
+	{
+		delPtr = table[i];
+		table[i] = table[i]->next;
+		delete delPtr;
+		used--;
+	}
+	
+	else
+	{
+		nodePtr->rec.key = ptr->rec.key;
+		nodePtr->rec.data = table[i]->rec.data;
+		delPtr = table[i];
+		table[i] = table[i]->next;
+		delete delPtr;
+		used--;
+	}
+}	
 
 void Table::print() const
 {
