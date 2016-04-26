@@ -91,38 +91,43 @@ void Table::find( int key, bool& found, RecordType& result ) const
    }
 }
 
-
+/// erase function
+/// This function is used to erase individual records from the table.
+/// It does this by determining if the head node is the node to be deleted, if so,
+/// delete and move. If the record is in the the middle or end of the linked list,
+/// it will copy the contents of the head node into the node which is to be deleted,
+/// then deletes the head node.
 void Table::erase(  int key, bool& found, RecordType& result)
 {
-	Node  *nodePtr,
-		  *delPtr,
-		  *ptr;
-	
+	Node *nodePtr,
+		  *delPtr;
+
 	findPtr( key, found, nodePtr );
 	int i = hash(key);
-	ptr = table[i];
+
 	if(!found)
 		cout << "Item not found in table." << endl;
-	
-	else if( found && (ptr == nodePtr))
+
+	else if( found && (table[i] == nodePtr))
 	{
 		delPtr = table[i];
 		table[i] = table[i]->next;
 		delete delPtr;
 		used--;
 	}
-	
+
 	else
 	{
-		nodePtr->rec.key = ptr->rec.key;
+		nodePtr->rec.key = table[i]->rec.key;
 		nodePtr->rec.data = table[i]->rec.data;
 		delPtr = table[i];
 		table[i] = table[i]->next;
 		delete delPtr;
 		used--;
 	}
-}	
+}
 
+/// print() function to print out the records in the hash table.
 void Table::print() const
 {
    Node* ptr;
@@ -134,7 +139,7 @@ void Table::print() const
          {
             cout << "Key = " << ptr->rec.key << endl;
             cout << "Hash = " << hash(ptr->rec.key) << endl;
-            cout << "Key = " << ptr->rec.data << endl << endl;
+            cout << "Data = " << ptr->rec.data << endl << endl;
             ptr = ptr->next;
          }
    }
